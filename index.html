@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Озаригн — Ритмологическое консультирование</title>
+<link rel="icon" href="assets/logo.png" type="image/png" />
+<style>
+@font-face {
+  font-family: "Manrope";
+  src: url("fonts/Manrope1.woff2") format("woff2-variations"),
+       url("fonts/Manrope1.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ip-brand-green:        #19BE8D;
+  --ip-brand-green-hover:  #14A97C;
+  --ip-brand-green-active: #0F986F;
+  --ip-brand-violet:       #6C5BEC;
+  --ip-brand-violet-50:    #E5E2F8;
+  --ip-brand-pink:         #EA3B8B;
+  --ip-ink:                #222126;
+  --ip-ink-2:              #45454C;
+  --ip-ink-3:              #73707D;
+  --ip-ink-5:              #8D8C90;
+  --ip-muted:              #7A7A8B;
+  --ip-muted-3:            #BCBCC9;
+  --ip-surface:            #FFFFFF;
+  --ip-surface-2:          #F6F6FA;
+  --ip-surface-4:          #EBECEE;
+  --border-soft:           #EBECEE;
+  --font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --gradient: linear-gradient(135deg, #6C5BEC 0%, #19BE8D 100%);
+  --radius-lg: 12px;
+  --shadow-card: 0px 4px 24px 0px rgba(0,0,0,0.14);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--ip-surface);
+  color: var(--ip-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+button { font: inherit; }
+
+/* ── Header ── */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 64px;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  padding: 0 34px;
+  z-index: 100;
+}
+.header img { height: 32px; object-fit: contain; }
+.header .brand {
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ip-ink);
+}
+
+/* ── Hero keyframes ── */
+@keyframes mindBreath {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%     { transform: scale(1.12); opacity: 0.85; }
+}
+@keyframes heartBeat {
+  0%,100% { transform: scale(1); }
+  15%     { transform: scale(1.22); }
+  30%     { transform: scale(1); }
+  45%     { transform: scale(1.12); }
+  60%     { transform: scale(1); }
+}
+@keyframes orbitCW  { from { transform: rotate(0deg);    } to { transform: rotate(360deg);  } }
+@keyframes orbitCCW { from { transform: rotate(0deg);    } to { transform: rotate(-360deg); } }
+@keyframes rippleOut     { 0% { r: 22; opacity: 0.55; } 100% { r: 108; opacity: 0; } }
+@keyframes rippleOutWide { 0% { r: 22; opacity: 0.42; } 100% { r: 148; opacity: 0; } }
+@keyframes flowPulse     { 0%,100% { opacity: 0.15; } 50% { opacity: 0.7; } }
+
+@keyframes fadeIn      { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp16  { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp12  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp8   { from { opacity: 0; transform: translateY(8px);  } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInScale { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+
+.anim-svg     { opacity: 0; animation: fadeInScale 1.2s cubic-bezier(0.22,1,0.36,1) 0.1s forwards; }
+.anim-tagline { opacity: 0; animation: fadeIn      0.5s cubic-bezier(0.22,1,0.36,1) 0.4s forwards; }
+.anim-h1      { opacity: 0; animation: fadeInUp16  0.8s cubic-bezier(0.22,1,0.36,1) 0.6s forwards; }
+.anim-sub     { opacity: 0; animation: fadeInUp12  0.7s cubic-bezier(0.22,1,0.36,1) 1.0s forwards; }
+.anim-btns    { opacity: 0; animation: fadeInUp8   0.6s cubic-bezier(0.22,1,0.36,1) 1.2s forwards; }
+.anim-metrics { opacity: 0; animation: fadeIn      0.6s cubic-bezier(0.22,1,0.36,1) 1.4s forwards; }
+
+/* ── Hero section ── */
+.hero {
+  min-height: max(100vh, 640px);
+  background: var(--ip-surface);
+  display: flex;
+  align-items: center;
+  padding: 80px 0 60px;
+}
+.hero-grid {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 34px;
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  gap: 48px;
+  align-items: center;
+}
+.hero-tag {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--ip-brand-violet);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.hero-h1 {
+  font-weight: 700;
+  font-size: clamp(44px, 5.5vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--ip-ink);
+  margin-bottom: 24px;
+}
+.hero-h1 em {
+  font-style: italic;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ip-ink-2);
+  max-width: 480px;
+  margin-bottom: 36px;
+  text-wrap: pretty;
+}
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.hero-metrics-line {
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--ip-muted);
+  letter-spacing: 0.01em;
+}
+.hero-illustration {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 28px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
+  background: var(--gradient);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #5b4cdb 0%, #14A97C 100%);
+  box-shadow: 0 4px 20px rgba(108,91,236,0.28);
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 28px;
+  border-radius: 12px;
+  border: 1.5px solid #BCBCC9;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 15px;
+  color: #45454C;
+  background: #fff;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+.btn-secondary:hover {
+  border-color: #6C5BEC;
+  color: #6C5BEC;
+  background: #F5F3FE;
+}
+
+/* ── Hero illustration animations ── */
+.svg-mind {
+  transform-origin: 200px 168px;
+  transform-box: fill-box;
+  animation: mindBreath 3.5s ease-in-out infinite;
+}
+.svg-heart {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: heartBeat 1.4s ease-in-out infinite;
+}
+.svg-orbiter-1 { transform-origin: 200px 200px; animation: orbitCW  20s linear infinite; }
+.svg-orbiter-2 { transform-origin: 200px 200px; animation: orbitCCW 28s linear infinite; }
+.svg-orbiter-3 { transform-origin: 200px 200px; animation: orbitCW  16s linear infinite; }
+.svg-ripple-1  { animation: rippleOut     2.4s ease-out infinite; }
+.svg-ripple-2  { animation: rippleOutWide 2.4s ease-out 1.2s infinite; }
+.svg-flow-1    { animation: flowPulse 2.1s ease-in-out infinite; }
+.svg-flow-2    { animation: flowPulse 2.1s ease-in-out 0.35s infinite; }
+.svg-flow-3    { animation: flowPulse 2.1s ease-in-out 0.7s infinite; }
+
+/* ── Section 2: About ── */
+.s2 {
+  background: var(--ip-surface);
+  padding: 120px 0;
+}
+.s2-wrap { max-width: 1160px; margin: 0 auto; padding: 0 34px; }
+.s2-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 48px 64px;
+  align-items: start;
+  margin-bottom: 80px;
+}
+.s2-h2 {
+  font-weight: 400;
+  font-size: clamp(28px, 3.6vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ip-ink);
+  opacity: 0;
+}
+.s2-h2 .grad {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.s2-body { opacity: 0; }
+.s2-body p {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--ip-ink-2);
+}
+.s2-body p + p { margin-top: 1em; }
+
+.s2-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.s2-metric {
+  display: flex;
+  flex-direction: column;
+}
+.s2-metric + .s2-metric {
+  padding-left: 40px;
+  border-left: 1px solid #EBECEE;
+}
+.s2-metric-num {
+  font-weight: 400;
+  font-size: clamp(44px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -1px;
+  color: var(--ip-brand-violet);
+}
+.s2-metric-unit {
+  font-weight: 500;
+  font-size: clamp(13px, 1.4vw, 17px);
+  color: var(--ip-muted);
+  margin-left: 7px;
+  letter-spacing: 0;
+}
+.s2-line {
+  height: 1px;
+  background: var(--ip-brand-violet);
+  margin: 16px 0;
+  width: 0;
+  opacity: 0;
+}
+.s2-label {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ip-ink-2);
+  opacity: 0;
+  max-width: 180px;
+}
+
+@keyframes lineExpand { from { width: 0; opacity: 0; } to { width: 24px; opacity: 1; } }
+.s2-animate .s2-line  { animation: lineExpand 0.6s cubic-bezier(0.22,1,0.36,1) both; }
+.s2-animate .s2-label { animation: fadeIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.5s both; }
+.s2-animate .s2-h2    { animation: fadeInUp16 0.8s cubic-bezier(0.22,1,0.36,1) both; }
+.s2-animate .s2-body  { animation: fadeInUp12 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s both; }
+.s2-animate .s2-metric:nth-child(1) .s2-line  { animation-delay: 0.00s; }
+.s2-animate .s2-metric:nth-child(2) .s2-line  { animation-delay: 0.18s; }
+.s2-animate .s2-metric:nth-child(3) .s2-line  { animation-delay: 0.36s; }
+.s2-animate .s2-metric:nth-child(4) .s2-line  { animation-delay: 0.54s; }
+.s2-animate .s2-metric:nth-child(1) .s2-label { animation-delay: 0.30s; }
+.s2-animate .s2-metric:nth-child(2) .s2-label { animation-delay: 0.48s; }
+.s2-animate .s2-metric:nth-child(3) .s2-label { animation-delay: 0.66s; }
+.s2-animate .s2-metric:nth-child(4) .s2-label { animation-delay: 0.84s; }
+
+/* ── Section 3: WhoIsItFor mosaic ── */
+@keyframes cardFadeIn { from { opacity: 0; transform: scale(0.94) translateY(16px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+@keyframes drawStroke { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes steamFloat  { 0% { transform: translateY(6px); opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.5; } 100% { transform: translateY(-26px); opacity: 0; } }
+@keyframes curtainSway { 0%,100% { transform: skewX(0deg); } 50% { transform: skewX(5deg); } }
+@keyframes pageDrift   { 0%,100% { transform: translate(0,0) rotate(0deg); opacity: 1; } 50% { transform: translate(9px,-12px) rotate(15deg); opacity: 0.6; } }
+@keyframes dropFall    { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(90px); opacity: 0; } }
+@keyframes dotLeft     { 0% { transform: translate(0,0); opacity: 0; } 8% { opacity: 1; } 88% { opacity: 0.9; } 100% { transform: translate(-28px,-40px); opacity: 0; } }
+@keyframes dotRight    { 0% { transform: translate(0,0); opacity: 0; } 8% { opacity: 1; } 88% { opacity: 0.9; } 100% { transform: translate(28px,-40px); opacity: 0; } }
+@keyframes leafFall1   { 0% { transform: translate(0,0) rotate(0); opacity: 0.9; } 100% { transform: translate(-14px,75px) rotate(-130deg); opacity: 0; } }
+@keyframes leafFall2   { 0% { transform: translate(0,0) rotate(0); opacity: 0.9; } 100% { transform: translate(11px,75px) rotate(150deg); opacity: 0; } }
+@keyframes leafFall3   { 0% { transform: translate(0,0) rotate(0); opacity: 0.8; } 100% { transform: translate(-6px,75px) rotate(200deg); opacity: 0; } }
+
+.s3 {
+  background: var(--ip-surface-2);
+  padding: 120px 0;
+}
+.s3-wrap { max-width: 1160px; margin: 0 auto; padding: 0 34px; }
+.s3-header { text-align: center; margin-bottom: 80px; }
+.s3-header .anim-tagline {
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--ip-brand-violet);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0;
+}
+.s3-header .s2-h2 { margin-bottom: 20px; }
+.s3-header .s2-body {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ip-ink-2);
+  max-width: 540px;
+  margin: 0 auto;
+}
+.s3-header.s2-animate .anim-tagline { animation: fadeIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.4s both; }
+
+.s3-mosaic {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 240px 240px 240px;
+  grid-template-areas: "a b b" "c d e" "f f e";
+  gap: 12px;
+}
+.s3-card {
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: default;
+  opacity: 0;
+  transform: translateY(0);
+  box-shadow: none;
+  transition:
+    background .6s cubic-bezier(.22,1,.36,1),
+    transform .6s cubic-bezier(.22,1,.36,1),
+    box-shadow .6s cubic-bezier(.22,1,.36,1);
+}
+.s3-cards-visible .s3-card-0 { animation: cardFadeIn .6s cubic-bezier(.22,1,.36,1) .00s both; }
+.s3-cards-visible .s3-card-1 { animation: cardFadeIn .6s cubic-bezier(.22,1,.36,1) .10s both; }
+.s3-cards-visible .s3-card-2 { animation: cardFadeIn .6s cubic-bezier(.22,1,.36,1) .20s both; }
+.s3-cards-visible .s3-card-3 { animation: cardFadeIn .6s cubic-bezier(.22,1,.36,1) .30s both; }
+.s3-cards-visible .s3-card-4 { animation: cardFadeIn .6s cubic-bezier(.22,1,.36,1) .40s both; }
+.s3-cards-visible .s3-card-5 { animation: cardFadeIn .6s cubic-bezier(.22,1,.36,1) .50s both; }
+
+.s3-tag {
+  position: relative;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  z-index: 3;
+  margin: 0;
+  opacity: 0;
+}
+.s3-illu-wrap {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  transition: transform .6s cubic-bezier(.22,1,.36,1), opacity .6s ease;
+}
+.s3-text {
+  position: relative;
+  z-index: 2;
+}
+.s3-phrase-main {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  line-height: 1.3;
+  margin: 0;
+  opacity: 0;
+}
+.s3-phrase-sub {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 12px 0 0 0;
+  opacity: 0;
+}
+.s3-draw .s3-tag { animation: fadeIn .4s ease .2s forwards; }
+.s3-card-0.s3-draw .s3-phrase-main, .s3-card-0.s3-draw .s3-phrase-sub { animation: fadeIn .5s ease .30s forwards; }
+.s3-card-1.s3-draw .s3-phrase-main, .s3-card-1.s3-draw .s3-phrase-sub { animation: fadeIn .5s ease .40s forwards; }
+.s3-card-2.s3-draw .s3-phrase-main, .s3-card-2.s3-draw .s3-phrase-sub { animation: fadeIn .5s ease .50s forwards; }
+.s3-card-3.s3-draw .s3-phrase-main, .s3-card-3.s3-draw .s3-phrase-sub { animation: fadeIn .5s ease .60s forwards; }
+.s3-card-4.s3-draw .s3-phrase-main, .s3-card-4.s3-draw .s3-phrase-sub { animation: fadeIn .5s ease .70s forwards; }
+.s3-card-5.s3-draw .s3-phrase-main, .s3-card-5.s3-draw .s3-phrase-sub { animation: fadeIn .5s ease .80s forwards; }
+
+.s3-path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.s3-draw .s3-path { animation: drawStroke .8s ease-in-out forwards; }
+.s3-card-0.s3-draw .s3-path { animation-delay: .00s; }
+.s3-card-1.s3-draw .s3-path { animation-delay: .10s; }
+.s3-card-2.s3-draw .s3-path { animation-delay: .20s; }
+.s3-card-3.s3-draw .s3-path { animation-delay: .30s; }
+.s3-card-4.s3-draw .s3-path { animation-delay: .40s; }
+.s3-card-5.s3-draw .s3-path { animation-delay: .50s; }
+
+.s3-steam-1 { animation: steamFloat 3s ease-in-out 0s infinite; }
+.s3-steam-2 { animation: steamFloat 3s ease-in-out 1s infinite; }
+.s3-steam-3 { animation: steamFloat 3s ease-in-out 2s infinite; }
+.s3-curtain { animation: curtainSway 5s ease-in-out infinite; transform-origin: top center; }
+.s3-page-fly { animation: pageDrift 6s ease-in-out infinite; }
+.s3-drop-1 { animation: dropFall 4s ease-in 0s infinite; }
+.s3-drop-2 { animation: dropFall 4s ease-in 1.4s infinite; }
+.s3-drop-3 { animation: dropFall 4s ease-in 2.8s infinite; }
+.s3-dot-l  { animation: dotLeft  5.5s ease-in-out 0s infinite; }
+.s3-dot-r  { animation: dotRight 5.5s ease-in-out 2.75s infinite; }
+.s3-leaf-1 { animation: leafFall1 5s ease-in 0s infinite; }
+.s3-leaf-2 { animation: leafFall2 5s ease-in 2s infinite; }
+.s3-leaf-3 { animation: leafFall3 5s ease-in 3.5s infinite; }
+
+.s3-active                    { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+.s3-active .s3-illu-wrap      { transform: translate(-8px,-8px) scale(1.02); }
+.s3-active .s3-steam-1,
+.s3-active .s3-steam-2,
+.s3-active .s3-steam-3        { animation-duration: 2.3s; }
+.s3-active .s3-curtain        { animation-duration: 3.85s; }
+.s3-active .s3-page-fly       { animation-duration: 4.6s; }
+.s3-active .s3-drop-1,
+.s3-active .s3-drop-2,
+.s3-active .s3-drop-3         { animation-duration: 3.1s; }
+.s3-active .s3-dot-l,
+.s3-active .s3-dot-r          { animation-duration: 4.2s; }
+.s3-active .s3-leaf-1,
+.s3-active .s3-leaf-2,
+.s3-active .s3-leaf-3         { animation-duration: 3.85s; }
+
+/* ── Section 4: Directions ── */
+.s4 { background: var(--ip-surface); padding: 120px 0; }
+.s4-wrap { max-width: 1160px; margin: 0 auto; padding: 0 34px; }
+.s4-header { text-align: center; margin-bottom: 80px; }
+.s4-tagline {
+  font-weight: 500; font-size: 11px;
+  letter-spacing: 0.27em;
+  color: var(--ip-brand-violet);
+  text-transform: uppercase;
+  margin: 0; opacity: 0;
+}
+.s4-h2 {
+  font-weight: 600;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--ip-ink);
+  margin: 20px 0; opacity: 0;
+}
+.s4-sub {
+  font-weight: 400; font-size: 17px;
+  line-height: 1.7;
+  color: var(--ip-ink-2);
+  max-width: 540px;
+  margin: 0 auto; opacity: 0;
+}
+.s4-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.s4-card {
+  background: #fff;
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 28px;
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  cursor: pointer;
+  opacity: 0;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.s4-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+.s4-card .s4-icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .3s ease;
+}
+.s4-card:hover .s4-icon { transform: scale(1.05); }
+.s4-card h3 {
+  font-weight: 600; font-size: 18px;
+  letter-spacing: -0.3px;
+  color: var(--ip-ink);
+  margin: 0 0 8px;
+}
+.s4-card p {
+  font-weight: 400; font-size: 14px;
+  line-height: 1.6;
+  color: var(--ip-ink-2);
+  margin: 0;
+}
+.s4-arrow {
+  position: absolute; right: 24px; bottom: 24px;
+  color: var(--ip-muted);
+  opacity: 0.4;
+  transform: translateX(0);
+  transition: opacity .3s ease, transform .3s ease;
+  display: flex;
+}
+.s4-card:hover .s4-arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+@keyframes s4FadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes s4FadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes s4CardIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.s4-animate .s4-tagline { animation: s4FadeIn 0.5s cubic-bezier(.22,1,.36,1) both; }
+.s4-animate .s4-h2      { animation: s4FadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.2s both; }
+.s4-animate .s4-sub     { animation: s4FadeUp 0.6s cubic-bezier(.22,1,.36,1) 0.4s both; }
+.s4-animate .s4-card    { animation: s4CardIn 0.6s cubic-bezier(.22,1,.36,1) both; }
+.s4-animate .s4-card-0 { animation-delay: 0.40s; }
+.s4-animate .s4-card-1 { animation-delay: 0.48s; }
+.s4-animate .s4-card-2 { animation-delay: 0.56s; }
+.s4-animate .s4-card-3 { animation-delay: 0.64s; }
+.s4-animate .s4-card-4 { animation-delay: 0.72s; }
+.s4-animate .s4-card-5 { animation-delay: 0.80s; }
+
+/* per-card hover border colors */
+.s4-card[data-key="0"]:hover { border-color: #86E4CC; }
+.s4-card[data-key="1"]:hover { border-color: #F69FC9; }
+.s4-card[data-key="2"]:hover { border-color: #AECAF8; }
+.s4-card[data-key="3"]:hover { border-color: #F6D28A; }
+.s4-card[data-key="4"]:hover { border-color: #C2BAEF; }
+.s4-card[data-key="5"]:hover { border-color: #9DDDD0; }
+
+/* ── Section 5: HowItWorks ── */
+.s5 { background: #F4F2FB; padding: 120px 0; }
+.s5-wrap { max-width: 1160px; margin: 0 auto; padding: 0 34px; }
+.s5-header { text-align: center; margin-bottom: 80px; }
+.s5-tagline {
+  font-weight: 500; font-size: 11px;
+  letter-spacing: 0.27em;
+  color: var(--ip-brand-violet);
+  text-transform: uppercase;
+  margin: 0; opacity: 0;
+}
+.s5-h2 {
+  font-weight: 600;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--ip-ink);
+  margin: 20px 0; opacity: 0;
+}
+.s5-sub {
+  font-weight: 400; font-size: 17px;
+  line-height: 1.7;
+  color: var(--ip-ink-2);
+  max-width: 540px;
+  margin: 0 auto; opacity: 0;
+}
+.s5-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  position: relative;
+  margin-bottom: 80px;
+}
+.s5-line {
+  position: absolute;
+  top: 36px;
+  left: 16.66%;
+  right: 16.66%;
+  height: 1px;
+  border-top: 1px dashed var(--border-soft);
+  opacity: 0;
+  pointer-events: none;
+}
+.s5-dot {
+  position: absolute;
+  top: -2px; left: 0;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gradient);
+  box-shadow: 0 0 8px rgba(108,91,236,0.5);
+}
+.s5-step { position: relative; z-index: 1; }
+.s5-num {
+  font-weight: 700; font-size: 64px;
+  line-height: 1;
+  letter-spacing: -3px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 24px; opacity: 0;
+}
+.s5-title {
+  font-weight: 600; font-size: 22px;
+  letter-spacing: -0.5px;
+  color: var(--ip-ink);
+  margin: 0 0 12px; opacity: 0;
+}
+.s5-text {
+  font-weight: 400; font-size: 15px;
+  line-height: 1.7;
+  color: var(--ip-ink-2);
+  margin: 0; max-width: 320px; opacity: 0;
+}
+
+@keyframes s5Fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes s5Up   { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes s5NumIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+@keyframes s5FlowDot {
+  0%   { left: 0%;   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+.s5-animate .s5-tagline { animation: s5Fade 0.5s cubic-bezier(.22,1,.36,1) both; }
+.s5-animate .s5-h2      { animation: s5Up 0.7s cubic-bezier(.22,1,.36,1) 0.2s both; }
+.s5-animate .s5-sub     { animation: s5Up 0.6s cubic-bezier(.22,1,.36,1) 0.4s both; }
+.s5-animate .s5-step .s5-num   { animation: s5NumIn 0.5s cubic-bezier(.22,1,.36,1) both; }
+.s5-animate .s5-step .s5-title { animation: s5Up    0.5s cubic-bezier(.22,1,.36,1) both; }
+.s5-animate .s5-step .s5-text  { animation: s5Up    0.5s cubic-bezier(.22,1,.36,1) both; }
+.s5-animate .s5-step-0 .s5-num   { animation-delay: 0.55s; }
+.s5-animate .s5-step-0 .s5-title { animation-delay: 0.70s; }
+.s5-animate .s5-step-0 .s5-text  { animation-delay: 0.85s; }
+.s5-animate .s5-step-1 .s5-num   { animation-delay: 0.75s; }
+.s5-animate .s5-step-1 .s5-title { animation-delay: 0.90s; }
+.s5-animate .s5-step-1 .s5-text  { animation-delay: 1.05s; }
+.s5-animate .s5-step-2 .s5-num   { animation-delay: 0.95s; }
+.s5-animate .s5-step-2 .s5-title { animation-delay: 1.10s; }
+.s5-animate .s5-step-2 .s5-text  { animation-delay: 1.25s; }
+.s5-animate .s5-line { animation: s5Fade 0.6s ease 1.4s forwards; }
+.s5-animate .s5-line .s5-dot { animation: s5FlowDot 4s ease-in-out 2.0s infinite; }
+
+/* ── Section 6: FAQ ── */
+.s6 { background: var(--ip-surface); padding: 120px 0; }
+.s6-wrap {
+  max-width: 1160px; margin: 0 auto; padding: 0 34px;
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 64px;
+  align-items: start;
+}
+.s6-left { position: sticky; top: 120px; }
+.s6-tagline {
+  font-weight: 500; font-size: 11px;
+  letter-spacing: 0.27em;
+  color: var(--ip-brand-violet);
+  text-transform: uppercase;
+  margin: 0; opacity: 0;
+}
+.s6-h2 {
+  font-weight: 600;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--ip-ink);
+  margin: 20px 0 0; opacity: 0;
+}
+.s6-sub {
+  font-weight: 400; font-size: 16px;
+  line-height: 1.7;
+  color: var(--ip-ink-2);
+  max-width: 380px;
+  margin: 24px 0 0; opacity: 0;
+}
+.s6-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 24px; height: 44px; padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid #EBECEE;
+  background: transparent;
+  font-weight: 500; font-size: 14px;
+  color: var(--ip-ink); cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+  opacity: 0;
+}
+.s6-btn:hover { background: var(--ip-surface-2); }
+
+.s6-list { display: flex; flex-direction: column; gap: 8px; }
+.s6-item {
+  background: #fff;
+  border: 1px solid #EBECEE;
+  border-radius: 12px;
+  padding: 24px 28px;
+  cursor: pointer;
+  transition: background .3s ease, border-color .3s ease;
+  opacity: 0;
+}
+.s6-item.is-open {
+  background: #F4F2FB;
+  border-color: rgba(108,91,236,0.30);
+}
+.s6-item:not(.is-open):hover { border-color: var(--border-soft); }
+.s6-item-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.s6-item-q {
+  font-weight: 600; font-size: 17px;
+  letter-spacing: -0.2px;
+  color: var(--ip-ink);
+  margin: 0; line-height: 1.4;
+}
+.s6-item-icon {
+  flex-shrink: 0;
+  color: var(--ip-muted);
+  transform: rotate(0deg) scale(1);
+  transition: transform .3s ease, color .3s ease;
+  display: inline-flex;
+}
+.s6-item:not(.is-open):hover .s6-item-icon { transform: rotate(0deg) scale(1.1); }
+.s6-item.is-open .s6-item-icon {
+  color: var(--ip-brand-violet);
+  transform: rotate(45deg) scale(1);
+}
+.s6-item-body {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: height .4s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+}
+.s6-item-body-inner { padding-top: 16px; }
+.s6-item-body-inner p {
+  font-weight: 400; font-size: 15px;
+  line-height: 1.7;
+  color: var(--ip-ink-2);
+  margin: 0;
+}
+.s6-item-body-inner p + p { margin-top: 12px; }
+
+@keyframes s6Fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes s6Up   { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.s6-animate .s6-tagline { animation: s6Fade 0.5s cubic-bezier(.22,1,.36,1) both; }
+.s6-animate .s6-h2      { animation: s6Up 0.7s cubic-bezier(.22,1,.36,1) 0.2s both; }
+.s6-animate .s6-sub     { animation: s6Up 0.6s cubic-bezier(.22,1,.36,1) 0.4s both; }
+.s6-animate .s6-btn     { animation: s6Up 0.6s cubic-bezier(.22,1,.36,1) 0.6s both; }
+.s6-list-in .s6-item    { animation: s6Up 0.5s cubic-bezier(.22,1,.36,1) both; }
+.s6-list-in .s6-item-0 { animation-delay: 0.30s; }
+.s6-list-in .s6-item-1 { animation-delay: 0.38s; }
+.s6-list-in .s6-item-2 { animation-delay: 0.46s; }
+.s6-list-in .s6-item-3 { animation-delay: 0.54s; }
+.s6-list-in .s6-item-4 { animation-delay: 0.62s; }
+.s6-list-in .s6-item-5 { animation-delay: 0.70s; }
+
+/* ── Section 7: FinalCTA ── */
+@keyframes s7Flow {
+  0%,100% { background-position: 0% 0%; }
+  50%     { background-position: 100% 100%; }
+}
+@keyframes s7Spin  { to { transform: rotate(360deg); } }
+@keyframes s7SpinR { to { transform: rotate(-360deg); } }
+@keyframes s7Line   { to { width: 32px; opacity: 0.5; } }
+@keyframes s7Up     { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes s7CardIn { from { opacity: 0; transform: translateY(24px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes s7Dash   { to { stroke-dashoffset: 0; } }
+@keyframes s7Trust  { to { opacity: 0.95; } }
+
+.s7 {
+  position: relative;
+  padding: 140px 0;
+  background: linear-gradient(135deg, #6C5BEC 0%, #8E68E8 50%, #4FC3C7 100%);
+  background-size: 200% 200%;
+  animation: s7Flow 14s ease-in-out infinite;
+  overflow: hidden;
+  isolation: isolate;
+}
+.s7-orbits-tr { position: absolute; top: -160px; right: -160px; pointer-events: none; z-index: 0; animation: s7Spin 100s linear infinite; transform-origin: center; }
+.s7-orbits-bl { position: absolute; bottom: -120px; left: -120px; pointer-events: none; z-index: 0; animation: s7SpinR 120s linear infinite; transform-origin: center; }
+.s7-glow {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(60% 50% at 50% 40%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 70%);
+}
+.s7-wrap {
+  position: relative; z-index: 1;
+  max-width: 1080px; margin: 0 auto; padding: 0 34px;
+  text-align: center;
+}
+.s7-line {
+  width: 0; height: 1px; background: rgba(255,255,255,0.5);
+  margin: 0 auto 28px;
+}
+.s7-h2 {
+  font-weight: 600;
+  font-size: clamp(40px, 5.6vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -2px;
+  color: #fff;
+  margin: 0; opacity: 0;
+}
+.s7-h2 .marker { position: relative; display: inline-block; }
+.s7-h2 .marker em { font-style: italic; font-weight: 600; }
+.s7-underline {
+  position: absolute; left: 0; bottom: -6px;
+  overflow: visible;
+}
+.s7-underline path {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+}
+.s7-sub {
+  font-weight: 400; font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.9);
+  max-width: 540px;
+  margin: 32px auto 0; opacity: 0;
+}
+.s7-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 880px;
+  margin: 56px auto 0;
+  text-align: left;
+}
+.s7-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 12px 40px -8px rgba(20,18,40,0.18), 0 0 0 1px rgba(255,255,255,0.3);
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+.s7-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px -12px rgba(20,18,40,0.28), 0 0 0 1px rgba(255,255,255,0.4);
+}
+.s7-card-2 {
+  border-left: 3px solid #4FC3C7;
+}
+.s7-card-2:hover {
+  border-left-color: #3DAEB2;
+  box-shadow: 0 24px 60px -12px rgba(20,18,40,0.28), 0 0 0 1px rgba(79,195,199,0.3);
+}
+.s7-card-icon {
+  width: 56px; height: 56px;
+  border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .3s ease;
+}
+.s7-card:hover .s7-card-icon { transform: scale(1.05); }
+.s7-card h3 {
+  font-weight: 600; font-size: 22px;
+  letter-spacing: -0.4px;
+  color: var(--ip-ink);
+  margin: 0;
+}
+.s7-card p {
+  font-weight: 400; font-size: 14px;
+  line-height: 1.6;
+  color: var(--ip-ink-2);
+  margin: 0;
+}
+.s7-pill {
+  align-self: flex-start; margin-top: 4px;
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 48px; padding: 0 22px; border-radius: 999px;
+  background: linear-gradient(135deg, #6C5BEC 0%, #8E68E8 50%, #4FC3C7 100%);
+  color: #fff; text-decoration: none;
+  font-weight: 500; font-size: 15px;
+  box-shadow: 0 8px 24px -8px rgba(108,91,236,0.5);
+}
+.s7-recommended {
+  position: absolute; top: 16px; right: 16px;
+  font-weight: 500; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #3DAEB2;
+  padding: 4px 10px; border-radius: 999px;
+  background: rgba(79,195,199,0.10);
+}
+.s7-form {
+  margin-top: 4px;
+  display: flex; align-items: center; gap: 8px;
+  background: #F7F8FA;
+  border: 1px solid #EBECEE;
+  border-radius: 100px;
+  padding: 4px 4px 4px 18px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.s7-form.is-focused {
+  border-color: var(--ip-brand-violet);
+  box-shadow: 0 0 0 3px rgba(108,91,236,0.12);
+}
+.s7-form input {
+  flex: 1; min-width: 0; height: 44px;
+  border: none; outline: none;
+  background: transparent;
+  font-weight: 400; font-size: 15px;
+  color: var(--ip-ink);
+  font-family: inherit;
+}
+.s7-form button {
+  height: 44px; padding: 0 18px;
+  border: none; border-radius: 999px;
+  background: linear-gradient(135deg, #6C5BEC 0%, #8E68E8 50%, #4FC3C7 100%);
+  color: #fff; font-weight: 500; font-size: 14px;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: opacity .2s ease;
+}
+.s7-form button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.s7-success {
+  margin-top: 4px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: #E5F7F8;
+  color: #1f7a7e;
+  font-weight: 500; font-size: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.s7-trust {
+  margin-top: 32px;
+  display: inline-flex; align-items: center; gap: 8px;
+  color: rgba(255,255,255,0.7);
+  font-weight: 400; font-size: 13px;
+  opacity: 0;
+}
+.s7-in .s7-line     { animation: s7Line   0.6s cubic-bezier(.22,1,.36,1) 0.0s forwards; }
+.s7-in .s7-h2       { animation: s7Up     0.9s cubic-bezier(.22,1,.36,1) 0.2s forwards; }
+.s7-in .s7-underline path { animation: s7Dash 0.8s cubic-bezier(.22,1,.36,1) 0.7s forwards; }
+.s7-in .s7-sub      { animation: s7Up     0.7s cubic-bezier(.22,1,.36,1) 0.5s forwards; }
+.s7-in .s7-card-1   { animation: s7CardIn 0.7s cubic-bezier(.22,1,.36,1) 0.8s forwards; }
+.s7-in .s7-card-2   { animation: s7CardIn 0.7s cubic-bezier(.22,1,.36,1) 0.95s forwards; }
+.s7-in .s7-trust    { animation: s7Trust  0.6s ease 1.4s forwards; }
+
+/* ── Section 8: Footer ── */
+.s8 {
+  background: #0F1117;
+  padding: 80px 0 40px;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+}
+.s8.s8-in { opacity: 1; transform: translateY(0); }
+.s8-wrap { max-width: 1160px; margin: 0 auto; padding: 0 34px; }
+.s8-cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 48px;
+}
+.s8-brand-row { display: flex; align-items: center; gap: 10px; }
+.s8-brand-row span {
+  font-weight: 600; font-size: 18px;
+  letter-spacing: -0.2px;
+  color: #fff;
+}
+.s8-brand-text {
+  font-weight: 400; font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.6);
+  margin: 16px 0 0;
+  max-width: 280px;
+}
+.s8-socials { display: flex; gap: 12px; margin-top: 24px; }
+.s8-soc {
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease;
+}
+.s8-soc:hover { background: rgba(255,255,255,0.18); color: #fff; }
+.s8-coltitle {
+  font-weight: 500; font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin: 0 0 18px;
+}
+.s8 ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.s8-link, .s8-mail {
+  font-weight: 400; font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.s8-link:hover, .s8-mail:hover { color: #fff; }
+.s8-mail { display: block; margin-bottom: 16px; }
+.s8-chat {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 40px; padding: 0 16px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: #fff; font-weight: 500; font-size: 13px;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+.s8-chat:hover { background: rgba(255,255,255,0.06); }
+.s8-bottom {
+  margin-top: 64px; padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; flex-wrap: wrap;
+}
+.s8-legal {
+  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+  font-size: 13px; color: rgba(255,255,255,0.5);
+}
+.s8-legal-links { display: flex; gap: 16px; flex-wrap: wrap; }
+.s8-legal-links a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.s8-legal-links a:hover { color: #fff; }
+.s8-pay { display: flex; align-items: center; gap: 12px; opacity: 0.6; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .hero-grid > div:last-child { order: -1; max-width: 320px !important; margin: 0 auto !important; }
+  .s2-grid { grid-template-columns: 1fr !important; }
+  .s2-metrics-grid { grid-template-columns: repeat(2,1fr) !important; gap: 40px !important; }
+  .s2-metric { border-left: none !important; padding-left: 0 !important; }
+  .s2-metric + .s2-metric { border-left: none !important; padding-left: 0 !important; }
+  .s3-mosaic { grid-template-columns: repeat(2,1fr) !important; grid-template-rows: auto !important; grid-template-areas: none !important; }
+  .s3-mosaic .s3-card { grid-area: auto !important; min-height: 260px; }
+  .s4-grid { grid-template-columns: repeat(2,1fr) !important; }
+  .s5-steps { grid-template-columns: 1fr !important; gap: 48px !important; }
+  .s5-line { display: none !important; }
+  .s6-wrap { grid-template-columns: 1fr !important; gap: 48px !important; }
+  .s6-left { position: static !important; }
+  .s8-cols { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
+}
+@media (max-width: 768px) {
+  .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+}
+@media (max-width: 760px) {
+  .s7-cards { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .s7 { padding: 100px 0 !important; }
+}
+@media (max-width: 600px) {
+  .s2 { padding: 80px 0 !important; }
+  .s4 { padding: 80px 0 !important; }
+  .s5 { padding: 80px 0 !important; }
+  .s6 { padding: 80px 0 !important; }
+}
+@media (max-width: 560px) {
+  .s3-mosaic { grid-template-columns: 1fr !important; }
+  .s4-grid { grid-template-columns: 1fr !important; }
+  .s4-card { height: auto !important; min-height: 200px; }
+  .s8-cols { grid-template-columns: 1fr !important; }
+  .s8-bottom { flex-direction: column; align-items: flex-start !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .anim-svg, .anim-tagline, .anim-h1, .anim-sub, .anim-btns, .anim-metrics,
+  .s2-h2, .s2-body, .s2-line, .s2-label,
+  .s3-tag, .s3-phrase-main, .s3-phrase-sub, .s3-card,
+  .s4-tagline, .s4-h2, .s4-sub, .s4-card,
+  .s5-tagline, .s5-h2, .s5-sub, .s5-num, .s5-title, .s5-text, .s5-line,
+  .s6-tagline, .s6-h2, .s6-sub, .s6-btn, .s6-item,
+  .s7-line, .s7-h2, .s7-sub, .s7-card, .s7-trust {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .s2-line { width: 24px !important; }
+  .s7-underline path { stroke-dashoffset: 0 !important; }
+  .s5-dot { left: 50% !important; opacity: 1 !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ───────── Header ───────── -->
+<header class="header">
+  <img src="assets/logo.png" alt="Ирлем-практик" />
+  <span class="brand">Озаригн</span>
+</header>
+
+<!-- ───────── Hero ───────── -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <p class="anim-tagline hero-tag">— С 1992 ГОДА —</p>
+      <h1 class="anim-h1 hero-h1">У каждого человека<br />есть свой <em>ритм</em>.</h1>
+      <p class="anim-sub hero-sub">
+        Когда живёшь в согласии с ним — всё идёт легче.<br />
+        Работа, здоровье, отношения, деньги.<br />
+        Ритмология помогает этот ритм найти.
+      </p>
+      <div class="anim-btns hero-btns">
+        <button class="btn-primary" type="button">Найти ритмолога</button>
+        <button class="btn-secondary" type="button">Помогите с подбором</button>
+      </div>
+      <p class="anim-metrics hero-metrics-line">
+        33 года · 16 стран · 1000+ клиентов · 70% возвращаются
+      </p>
+    </div>
+    <div class="anim-svg hero-illustration">
+      <svg viewBox="0 0 400 400" style="width:100%;height:100%;overflow:visible" aria-hidden="true">
+        <defs>
+          <radialGradient id="aura" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#6C5BEC" stop-opacity="0.10" />
+            <stop offset="100%" stop-color="#6C5BEC" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="aura2" cx="50%" cy="60%" r="45%">
+            <stop offset="0%" stop-color="#19BE8D" stop-opacity="0.08" />
+            <stop offset="100%" stop-color="#19BE8D" stop-opacity="0" />
+          </radialGradient>
+          <linearGradient id="mindGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#6C5BEC" />
+            <stop offset="100%" stop-color="#8B7CF0" />
+          </linearGradient>
+          <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#19BE8D" />
+            <stop offset="100%" stop-color="#2CCEAC" />
+          </linearGradient>
+        </defs>
+
+        <circle cx="200" cy="200" r="190" fill="url(#aura)" />
+        <circle cx="200" cy="220" r="160" fill="url(#aura2)" />
+
+        <circle cx="200" cy="200" r="160" fill="none" stroke="#EBECEE" stroke-width="0.75" stroke-dasharray="2 5" />
+        <circle cx="200" cy="200" r="120" fill="none" stroke="#EBECEE" stroke-width="0.75" stroke-dasharray="2 5" />
+        <circle cx="200" cy="200" r="80"  fill="none" stroke="#EBECEE" stroke-width="0.75" stroke-dasharray="2 5" />
+
+        <g class="svg-orbiter-1"><circle cx="360" cy="200" r="4" fill="#6C5BEC" /></g>
+        <g class="svg-orbiter-2"><circle cx="200" cy="80"  r="4" fill="#19BE8D" /></g>
+        <g class="svg-orbiter-3"><circle cx="40"  cy="200" r="3" fill="#6C5BEC" opacity="0.55" /></g>
+
+        <circle class="svg-ripple-1" cx="200" cy="222" fill="none" stroke="#19BE8D" stroke-width="0.9" r="22" />
+        <circle class="svg-ripple-2" cx="200" cy="222" fill="none" stroke="#6C5BEC" stroke-width="0.9" r="22" />
+
+        <g class="svg-mind">
+          <path d="M 200 148 C 194 148 188 150 185 154 C 181 152 176 153 174 157 C 170 157 168 161 169 165 C 166 167 166 172 169 174 C 168 178 170 182 174 183 C 175 187 179 189 184 188 C 186 190 189 191 192 190 C 194 192 197 192 200 192 C 203 192 206 192 208 190 C 211 191 214 190 216 188 C 221 189 225 187 226 183 C 230 182 232 178 231 174 C 234 172 234 167 231 165 C 232 161 230 157 226 157 C 224 153 219 152 215 154 C 212 150 206 148 200 148 Z" fill="url(#mindGrad)" />
+          <line x1="200" y1="149" x2="200" y2="191" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+          <path d="M 185 158 Q 180 163 183 168" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.2" stroke-linecap="round" />
+          <path d="M 182 168 Q 178 174 182 179" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.2" stroke-linecap="round" />
+          <path d="M 189 155 Q 186 160 189 164" fill="none" stroke="rgba(255,255,255,0.2)"  stroke-width="1"   stroke-linecap="round" />
+          <path d="M 215 158 Q 220 163 217 168" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.2" stroke-linecap="round" />
+          <path d="M 218 168 Q 222 174 218 179" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.2" stroke-linecap="round" />
+          <path d="M 211 155 Q 214 160 211 164" fill="none" stroke="rgba(255,255,255,0.2)"  stroke-width="1"   stroke-linecap="round" />
+        </g>
+
+        <line class="svg-flow-1" x1="195" y1="193" x2="194" y2="207" stroke="#6C5BEC" stroke-width="1.2" stroke-linecap="round" />
+        <line class="svg-flow-2" x1="200" y1="193" x2="200" y2="207" stroke="#8B7CF0" stroke-width="1.2" stroke-linecap="round" />
+        <line class="svg-flow-3" x1="205" y1="193" x2="206" y2="207" stroke="#19BE8D" stroke-width="1.2" stroke-linecap="round" />
+
+        <g class="svg-heart">
+          <path d="M 200 250 L 178 231 Q 164 218 178 207 Q 191 200 200 214 Q 209 200 222 207 Q 236 218 222 231 Z" fill="url(#heartGrad)" />
+          <ellipse cx="191" cy="216" rx="4" ry="3" fill="rgba(255,255,255,0.25)" transform="rotate(-15, 191, 216)" />
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── About (Section 2) ───────── -->
+<section class="s2" data-reveal="s2-animate">
+  <div class="s2-wrap">
+    <div class="s2-grid">
+      <h2 class="s2-h2">
+        Метод, которому<br />доверяют уже <span class="grad">33 года</span>.
+      </h2>
+      <div class="s2-body">
+        <p>Есть вещи, которые влияют на нашу жизнь, но которые мы не замечаем. Законы времени — одна из них. Ритмология изучает эти законы. Понимая их, человек начинает видеть, почему одни периоды идут легко, а другие — через сопротивление. И что с этим делать.</p>
+        <p>Не теория. Живая практика — с реальными людьми и реальными результатами. Уже 33 года, в 16 странах мира.</p>
+      </div>
+    </div>
+    <div class="s2-metrics-grid">
+      <div class="s2-metric">
+        <div class="s2-metric-num"><span data-count="33">0</span><span class="s2-metric-unit">года</span></div>
+        <div class="s2-line"></div>
+        <p class="s2-label">Метод с историей и доказанным результатом</p>
+      </div>
+      <div class="s2-metric">
+        <div class="s2-metric-num"><span data-count="16">0</span><span class="s2-metric-unit">стран</span></div>
+        <div class="s2-line"></div>
+        <p class="s2-label">Россия, США, Европа, Азия, Австралия</p>
+      </div>
+      <div class="s2-metric">
+        <div class="s2-metric-num"><span data-count="1000">0</span>+</div>
+        <div class="s2-line"></div>
+        <p class="s2-label">Клиентов обращаются каждый месяц</p>
+      </div>
+      <div class="s2-metric">
+        <div class="s2-metric-num"><span data-count="70">0</span>%</div>
+        <div class="s2-line"></div>
+        <p class="s2-label">Возвращаются — потому что видят результат</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── WhoIsItFor (Section 3) ───────── -->
+<section class="s3">
+  <div class="s3-wrap">
+    <div class="s3-header" data-reveal="s2-animate">
+      <p class="anim-tagline">— Для кого это —</p>
+      <h2 class="s2-h2">Люди приходят по-разному.</h2>
+      <p class="s2-body">
+        Кто-то чувствует, что застрял — и не понимает почему. Кто-то хочет
+        принять важное решение. Кто-то просто давно хотел разобраться в себе —
+        и наконец нашёл для этого время.
+      </p>
+    </div>
+
+    <div class="s3-mosaic" data-reveal="s3-cards-visible">
+      <!-- Card 0: Тишина (a) — pastel violet -->
+      <div class="s3-card s3-card-0" data-card="0"
+           style="grid-area:a; background:#D4CFF5;">
+        <p class="s3-tag" style="color:#6C5BEC;">Тишина</p>
+        <div class="s3-illu-wrap" style="right:-28px; bottom:-28px; width:170px; height:170px; opacity:0.85;">
+          <svg viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%">
+            <path class="s3-path" pathLength="1" d="M18 76 Q50 84 82 76" stroke="#6C5BEC" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M28 46 Q25 66 36 72 Q50 77 64 72 Q76 66 72 46 Z" stroke="#6C5BEC" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M72 54 Q86 54 86 62 Q86 70 72 70" stroke="#6C5BEC" stroke-width="2" />
+            <path class="s3-steam-1" d="M40 42 Q38 36 40 30 Q42 24 40 18" stroke="#6C5BEC" stroke-width="1.8" fill="none" stroke-linecap="round" />
+            <path class="s3-steam-2" d="M50 40 Q48 34 50 28 Q52 22 50 16" stroke="#6C5BEC" stroke-width="1.8" fill="none" stroke-linecap="round" />
+            <path class="s3-steam-3" d="M60 42 Q58 36 60 30 Q62 24 60 18" stroke="#6C5BEC" stroke-width="1.8" fill="none" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="s3-text" style="max-width:calc(100% - 110px);">
+          <p class="s3-phrase-main" style="font-size:20px; color:#2D2480;">Хочется услышать себя.</p>
+          <p class="s3-phrase-sub" style="color:rgba(45,36,128,0.7);">Когда вокруг слишком шумно, чтобы понять, чего хочется.</p>
+        </div>
+      </div>
+
+      <!-- Card 1: Сомнения (b) — dark navy, wide -->
+      <div class="s3-card s3-card-1" data-card="1"
+           style="grid-area:b; background:#1E1B4B;">
+        <p class="s3-tag" style="color:rgba(255,255,255,0.45);">Сомнения</p>
+        <div class="s3-illu-wrap" style="right:-36px; bottom:-36px; width:240px; height:240px; opacity:0.6;">
+          <svg viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%">
+            <path class="s3-path" pathLength="1" d="M16 14 L16 86 L84 86 L84 14 Z" stroke="rgba(255,255,255,0.75)" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M16 50 L84 50" stroke="rgba(255,255,255,0.75)" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M50 14 L50 86" stroke="rgba(255,255,255,0.75)" stroke-width="2" />
+            <path class="s3-curtain" d="M84 14 Q92 26 88 50 Q92 72 84 86" stroke="rgba(255,255,255,0.75)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6" />
+            <circle cx="28" cy="30" r="3" fill="rgba(255,255,255,0.75)" opacity="0.4" />
+          </svg>
+        </div>
+        <div class="s3-text" style="max-width:calc(100% - 200px);">
+          <p class="s3-phrase-main" style="font-size:26px; color:#fff;">Что-то идёт не так.</p>
+          <p class="s3-phrase-sub" style="color:rgba(255,255,255,0.7);">А что именно — непонятно. И это длится не первый месяц.</p>
+        </div>
+      </div>
+
+      <!-- Card 2: Поиск (c) — mint -->
+      <div class="s3-card s3-card-2" data-card="2"
+           style="grid-area:c; background:#A4EDDA;">
+        <p class="s3-tag" style="color:#0E8A67;">Поиск</p>
+        <div class="s3-illu-wrap" style="right:-28px; bottom:-28px; width:170px; height:170px; opacity:0.85;">
+          <svg viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%">
+            <path class="s3-path" pathLength="1" d="M10 22 Q10 80 14 84 Q24 88 50 84 Q76 88 86 84 Q90 80 90 22 Q76 18 50 22 Q24 18 10 22 Z" stroke="#0E8A67" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M50 22 L50 84" stroke="#0E8A67" stroke-width="1.5" />
+            <path class="s3-path" pathLength="1" d="M24 34 L46 34" stroke="#0E8A67" stroke-width="1" />
+            <path class="s3-path" pathLength="1" d="M24 42 L46 42" stroke="#0E8A67" stroke-width="1" />
+            <path class="s3-path" pathLength="1" d="M24 50 L40 50" stroke="#0E8A67" stroke-width="1" />
+            <path class="s3-path" pathLength="1" d="M54 34 L76 34" stroke="#0E8A67" stroke-width="1" />
+            <path class="s3-path" pathLength="1" d="M54 42 L76 42" stroke="#0E8A67" stroke-width="1" />
+            <g class="s3-page-fly">
+              <path d="M68 14 Q74 10 78 16 Q74 22 66 20 Z" stroke="#0E8A67" stroke-width="1.5" fill="none" stroke-linecap="round" />
+            </g>
+          </svg>
+        </div>
+        <div class="s3-text" style="max-width:calc(100% - 110px);">
+          <p class="s3-phrase-main" style="font-size:20px; color:#065944;">Давно хотелось разобраться в себе.</p>
+          <p class="s3-phrase-sub" style="color:rgba(6,89,68,0.7);">Наконец появилось время — или решимость.</p>
+        </div>
+      </div>
+
+      <!-- Card 3: Перемены (d) — pink -->
+      <div class="s3-card s3-card-3" data-card="3"
+           style="grid-area:d; background:#F9BEDE;">
+        <p class="s3-tag" style="color:#C02070;">Перемены</p>
+        <div class="s3-illu-wrap" style="right:-28px; bottom:-28px; width:170px; height:170px; opacity:0.85;">
+          <svg viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%">
+            <path class="s3-path" pathLength="1" d="M30 22 Q30 34 37 34 Q44 34 44 22 L37 12 Z" stroke="#C02070" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M58 18 Q58 28 64 28 Q70 28 70 18 L64 9 Z"  stroke="#C02070" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M18 42 Q18 50 23 50 Q28 50 28 42 L23 34 Z" stroke="#C02070" stroke-width="1.6" />
+            <path class="s3-path" pathLength="1" d="M72 38 Q72 47 78 47 Q84 47 84 38 L78 29 Z" stroke="#C02070" stroke-width="1.6" />
+            <path class="s3-path" pathLength="1" d="M44 52 Q44 58 48.5 58 Q53 58 53 52 L48.5 45 Z" stroke="#C02070" stroke-width="1.4" />
+            <circle class="s3-drop-1" cx="37" cy="52" r="3"   fill="#C02070" opacity="0.7" />
+            <circle class="s3-drop-2" cx="64" cy="42" r="2.5" fill="#C02070" opacity="0.7" />
+            <circle class="s3-drop-3" cx="22" cy="58" r="2"   fill="#C02070" opacity="0.6" />
+          </svg>
+        </div>
+        <div class="s3-text" style="max-width:calc(100% - 110px);">
+          <p class="s3-phrase-main" style="font-size:20px; color:#7A0F46;">Тяжёлые перемены.</p>
+          <p class="s3-phrase-sub" style="color:rgba(122,15,70,0.7);">Те, которые не отложить и не обойти стороной.</p>
+        </div>
+      </div>
+
+      <!-- Card 4: Развилка (e) — sky blue, tall, with glow -->
+      <div class="s3-card s3-card-4" data-card="4"
+           style="grid-area:e; background:radial-gradient(circle at 75% 60%, rgba(89,139,237,0.35) 0%, #C8DAFB 60%);">
+        <p class="s3-tag" style="color:#2D5EC4;">Развилка</p>
+        <div class="s3-illu-wrap" style="right:-32px; bottom:-32px; width:220px; height:220px; opacity:0.85;">
+          <svg viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%">
+            <path class="s3-path" pathLength="1" d="M50 88 Q50 65 50 52" stroke="#2D5EC4" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M50 52 Q44 40 28 22" stroke="#2D5EC4" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M50 52 Q56 40 72 22" stroke="#2D5EC4" stroke-width="2" />
+            <circle class="s3-dot-l" cx="50" cy="80" r="3.5" fill="#2D5EC4" />
+            <circle class="s3-dot-r" cx="50" cy="80" r="3.5" fill="#2D5EC4" opacity="0.6" />
+          </svg>
+        </div>
+        <div class="s3-text" style="max-width:calc(100% - 40px);">
+          <p class="s3-phrase-main" style="font-size:24px; color:#1A3A80;">Решение, которое не получается принять.</p>
+          <p class="s3-phrase-sub" style="color:rgba(26,58,128,0.7);">Не от страха — от того, что слишком многое на кону.</p>
+        </div>
+      </div>
+
+      <!-- Card 5: Рост (f) — peach, wide -->
+      <div class="s3-card s3-card-5" data-card="5"
+           style="grid-area:f; background:#FFD4CC;">
+        <p class="s3-tag" style="color:#C44B34;">Рост</p>
+        <div class="s3-illu-wrap" style="right:-36px; bottom:-36px; width:240px; height:240px; opacity:0.85;">
+          <svg viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%">
+            <path class="s3-path" pathLength="1" d="M50 86 L50 46" stroke="#C44B34" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M50 48 Q34 48 28 38 Q22 28 32 22 Q28 14 36 12 Q34 4 44 6 Q46 0 50 2 Q54 0 56 6 Q66 4 64 12 Q72 14 68 22 Q78 28 72 38 Q66 48 50 48 Z" stroke="#C44B34" stroke-width="2" />
+            <path class="s3-path" pathLength="1" d="M44 86 Q40 90 34 88" stroke="#C44B34" stroke-width="1.5" />
+            <path class="s3-path" pathLength="1" d="M56 86 Q60 90 66 88" stroke="#C44B34" stroke-width="1.5" />
+            <circle class="s3-leaf-1" cx="38" cy="22" r="3"   fill="#C44B34" opacity="0.8" />
+            <circle class="s3-leaf-2" cx="62" cy="18" r="2.5" fill="#C44B34" opacity="0.8" />
+            <circle class="s3-leaf-3" cx="50" cy="12" r="2"   fill="#C44B34" opacity="0.7" />
+          </svg>
+        </div>
+        <div class="s3-text" style="max-width:calc(100% - 200px);">
+          <p class="s3-phrase-main" style="font-size:26px; color:#7A2215;">Хочется расти.</p>
+          <p class="s3-phrase-sub" style="color:rgba(122,34,21,0.7);">Но непонятно куда — и это само по себе тяжело.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── Directions (Section 4) ───────── -->
+<section class="s4" data-reveal="s4-animate">
+  <div class="s4-wrap">
+    <div class="s4-header">
+      <p class="s4-tagline">— Направления —</p>
+      <h2 class="s4-h2">С чем работают ритмологи.</h2>
+      <p class="s4-sub">
+        Жизнь редко приходит с одним вопросом. Но начать можно с того,
+        что сейчас важнее всего.
+      </p>
+    </div>
+    <div class="s4-grid">
+      <div class="s4-card s4-card-0" data-key="0">
+        <div class="s4-icon" style="background:#E5F7EF;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0E8A67" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19.2 2.96a1 1 0 0 1 1.6.94 9.43 9.43 0 0 1-2.49 5.45A6.93 6.93 0 0 1 13 11.5"/>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Здоровье</h3>
+          <p>Когда тело что-то сигналит, а ясности нет.</p>
+        </div>
+        <div class="s4-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="s4-card s4-card-1" data-key="1">
+        <div class="s4-icon" style="background:#FCE4EE;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C02070" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/>
+            <path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"/>
+            <path d="m18 15-2-2"/>
+            <path d="m15 18-2-2"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Отношения</h3>
+          <p>С партнёром, детьми, родителями, коллегами. Иногда достаточно увидеть ситуацию иначе.</p>
+        </div>
+        <div class="s4-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="s4-card s4-card-2" data-key="2">
+        <div class="s4-icon" style="background:#E4EDFC;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D5EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            <rect width="20" height="14" x="2" y="6" rx="2"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Работа</h3>
+          <p>Когда чувствуешь, что можешь больше, но что-то не даёт сдвинуться.</p>
+        </div>
+        <div class="s4-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="s4-card s4-card-3" data-key="3">
+        <div class="s4-icon" style="background:#FFF1D6;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B07A12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="8" r="6"/>
+            <path d="M18.09 10.37A6 6 0 1 1 10.34 18"/>
+            <path d="M7 6h1v4"/>
+            <path d="m16.71 13.88.7.71-2.82 2.82"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Деньги</h3>
+          <p>Не про схемы — про то, как устроено отношение к ресурсу.</p>
+        </div>
+        <div class="s4-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="s4-card s4-card-4" data-key="4">
+        <div class="s4-icon" style="background:#ECE9FB;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6C5BEC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/>
+            <circle cx="12" cy="12" r="10"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Поиск себя</h3>
+          <p>Кто я, чего хочу, как мне жить хорошо именно мне.</p>
+        </div>
+        <div class="s4-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="s4-card s4-card-5" data-key="5">
+        <div class="s4-icon" style="background:#DDF3EE;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0E8A8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+            <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+            <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/>
+            <path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Бизнес</h3>
+          <p>Когда дело должно развиваться устойчиво — без потерь энергии.</p>
+        </div>
+        <div class="s4-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── HowItWorks (Section 5) ───────── -->
+<section class="s5" data-reveal="s5-animate">
+  <div class="s5-wrap">
+    <div class="s5-header">
+      <p class="s5-tagline">— Как это работает —</p>
+      <h2 class="s5-h2">Всё начинается с разговора.</h2>
+      <p class="s5-sub">
+        Сначала консультация. Дальше — индивидуально. Жёсткого формата нет.
+      </p>
+    </div>
+    <div class="s5-steps">
+      <div class="s5-line">
+        <div class="s5-dot"></div>
+      </div>
+      <div class="s5-step s5-step-0">
+        <div class="s5-num">01</div>
+        <h3 class="s5-title">Знакомство</h3>
+        <p class="s5-text">Ритмолог выслушает, задаст вопросы и поможет понять, что сейчас важнее всего.</p>
+      </div>
+      <div class="s5-step s5-step-1">
+        <div class="s5-num">02</div>
+        <h3 class="s5-title">Подбор формата</h3>
+        <p class="s5-text">Один разговор или регулярная работа. Онлайн или офлайн. Решение остаётся за вами.</p>
+      </div>
+      <div class="s5-step s5-step-2">
+        <div class="s5-num">03</div>
+        <h3 class="s5-title">Работа</h3>
+        <p class="s5-text">В удобное для вас время. По мере необходимости. Без обязательств и пакетов.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FAQ (Section 6) ───────── -->
+<section class="s6">
+  <div class="s6-wrap">
+    <div class="s6-left" data-reveal="s6-animate">
+      <p class="s6-tagline">— Ответы —</p>
+      <h2 class="s6-h2">Спрашиваете —<br />отвечаем.</h2>
+      <p class="s6-sub">Если остались вопросы — напишите. Ответим в течение дня.</p>
+      <button class="s6-btn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6C5BEC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+        </svg>
+        Задать свой вопрос
+      </button>
+    </div>
+    <div class="s6-list" data-reveal="s6-list-in">
+      <div class="s6-item s6-item-0 is-open">
+        <div class="s6-item-head">
+          <h3 class="s6-item-q">Сколько стоит консультация?</h3>
+          <span class="s6-item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          </span>
+        </div>
+        <div class="s6-item-body">
+          <div class="s6-item-body-inner">
+            <p>Стоимость зависит от специалиста и формата работы. Базовая консультация — от 4 000 ₽, длительность около часа.</p>
+            <p>В каталоге специалистов рядом с каждым указана его стоимость и направления — можно выбрать по бюджету и теме.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="s6-item s6-item-1">
+        <div class="s6-item-head">
+          <h3 class="s6-item-q">А вдруг ритмолог мне не подойдёт?</h3>
+          <span class="s6-item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          </span>
+        </div>
+        <div class="s6-item-body">
+          <div class="s6-item-body-inner">
+            <p>Это нормально. Первая консультация ни к чему не обязывает — это просто разговор, чтобы понять, есть ли отклик.</p>
+            <p>Если чувствуете, что не сложилось — выберите другого специалиста. Все ритмологи разные: по характеру, опыту, манере работы. У нас их больше сотни в 16 странах.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="s6-item s6-item-2">
+        <div class="s6-item-head">
+          <h3 class="s6-item-q">Как готовиться к первой встрече?</h3>
+          <span class="s6-item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          </span>
+        </div>
+        <div class="s6-item-body">
+          <div class="s6-item-body-inner">
+            <p>Никак специально — просто приходите. Можете подумать заранее, с каким вопросом или ощущением идёте. Но если конкретного запроса нет — это тоже нормально, ритмолог поможет сформулировать.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="s6-item s6-item-3">
+        <div class="s6-item-head">
+          <h3 class="s6-item-q">Очно или онлайн — что лучше?</h3>
+          <span class="s6-item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          </span>
+        </div>
+        <div class="s6-item-body">
+          <div class="s6-item-body-inner">
+            <p>Зависит от вас. Многие выбирают онлайн — это удобнее и доступно из любой точки. Очные встречи возможны, если ритмолог принимает в вашем городе.</p>
+            <p>В каталоге у каждого специалиста указано, в каких форматах он работает.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="s6-item s6-item-4">
+        <div class="s6-item-head">
+          <h3 class="s6-item-q">Сколько встреч обычно нужно?</h3>
+          <span class="s6-item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          </span>
+        </div>
+        <div class="s6-item-body">
+          <div class="s6-item-body-inner">
+            <p>По-разному. Кому-то достаточно одного разговора — приходят с конкретным вопросом и уходят с ответом. Кто-то работает регулярно, раз в месяц или чаще, как со своим специалистом.</p>
+            <p>Ритмолог честно скажет, нужны ли вам ещё встречи или нет.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="s6-item s6-item-5">
+        <div class="s6-item-head">
+          <h3 class="s6-item-q">Чем ритмология отличается от психотерапии?</h3>
+          <span class="s6-item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          </span>
+        </div>
+        <div class="s6-item-body">
+          <div class="s6-item-body-inner">
+            <p>Это разные подходы, и они хорошо дополняют друг друга. Многие клиенты совмещают работу с ритмологом и психотерапевтом.</p>
+            <p>Ритмология — не про лечение, а про взгляд на жизнь со стороны её ритма и закономерностей. Если нужна именно медицинская или психотерапевтическая помощь — стоит обращаться к соответствующим специалистам.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FinalCTA (Section 7) ───────── -->
+<section class="s7" data-reveal="s7-in">
+  <svg class="s7-orbits-tr" width="560" height="560" viewBox="0 0 560 560">
+    <g fill="none" stroke="#fff" stroke-width="1">
+      <circle cx="280" cy="280" r="120" opacity="0.12"/>
+      <circle cx="280" cy="280" r="180" opacity="0.10"/>
+      <circle cx="280" cy="280" r="240" opacity="0.09"/>
+      <circle cx="280" cy="280" r="270" opacity="0.08"/>
+    </g>
+  </svg>
+  <svg class="s7-orbits-bl" width="380" height="380" viewBox="0 0 380 380">
+    <g fill="none" stroke="#fff" stroke-width="1">
+      <circle cx="190" cy="190" r="80"  opacity="0.10"/>
+      <circle cx="190" cy="190" r="130" opacity="0.09"/>
+      <circle cx="190" cy="190" r="170" opacity="0.07"/>
+    </g>
+  </svg>
+  <div class="s7-glow" aria-hidden="true"></div>
+
+  <div class="s7-wrap">
+    <div class="s7-line"></div>
+    <h2 class="s7-h2">
+      Готовы начать слышать
+      <span class="marker">
+        <em>свой ритм</em>
+        <svg class="s7-underline" width="100%" height="14" viewBox="0 0 280 14" preserveAspectRatio="none">
+          <path d="M4 8 C 60 2, 140 14, 276 5" fill="none" stroke="#4FC3C7" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </span>?
+    </h2>
+    <p class="s7-sub">Первая консультация — это просто разговор. Без обязательств, без давления, без пакетов.</p>
+
+    <div class="s7-cards">
+      <!-- Card 1 -->
+      <div class="s7-card s7-card-1">
+        <div class="s7-card-icon" style="background:#F1EEFB;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6C5BEC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+        </div>
+        <h3>Выберу сам</h3>
+        <p>Открою каталог, посмотрю специалистов, выберу того, кто откликается.</p>
+        <a href="#catalog" class="s7-pill">
+          К каталогу
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+      <!-- Card 2 -->
+      <div class="s7-card s7-card-2">
+        <div class="s7-recommended">Рекомендуем</div>
+        <div class="s7-card-icon" style="background:#E5F7F8;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3DAEB2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
+            <path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
+          </svg>
+        </div>
+        <h3>Помогите подобрать</h3>
+        <p>Расскажу о себе, и вы предложите подходящего специалиста.</p>
+        <form class="s7-form" id="ctaForm" novalidate>
+          <input type="text" id="ctaInput" placeholder="Имя или telegram" autocomplete="off" />
+          <button type="submit" id="ctaSubmit" disabled>
+            <span id="ctaSubmitLabel">Отправить</span>
+            <svg id="ctaSubmitIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </form>
+        <div class="s7-success" id="ctaSuccess" style="display:none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1f7a7e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          Спасибо! Свяжемся в ближайшее время.
+        </div>
+      </div>
+    </div>
+
+    <div class="s7-trust">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+        <path d="m9 12 2 2 4-4"/>
+      </svg>
+      Ваш контакт нужен только для связи. Ничего лишнего.
+    </div>
+  </div>
+</section>
+
+<!-- ───────── Footer (Section 8) ───────── -->
+<footer class="s8" data-reveal="s8-in">
+  <div class="s8-wrap">
+    <div class="s8-cols">
+      <div>
+        <div class="s8-brand-row">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="s8-grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#8E68E8"/>
+                <stop offset="60%" stop-color="#6C5BEC"/>
+                <stop offset="100%" stop-color="#4FC3C7"/>
+              </linearGradient>
+            </defs>
+            <path d="M12 2 L13.5 9 L20 10.5 L13.5 12 L12 19 L10.5 12 L4 10.5 L10.5 9 Z" fill="url(#s8-grad)"/>
+          </svg>
+          <span>Ирлем-практик</span>
+        </div>
+        <p class="s8-brand-text">
+          Платформа ритмологического консультирования. Помогаем найти свой ритм с 1992 года.
+        </p>
+        <div class="s8-socials">
+          <a href="#" class="s8-soc" aria-label="Telegram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/>
+              <path d="m21.854 2.147-10.94 10.939"/>
+            </svg>
+          </a>
+          <a href="#" class="s8-soc" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/>
+              <path d="m10 15 5-3-5-3z"/>
+            </svg>
+          </a>
+          <a href="#" class="s8-soc" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="s8-coltitle">Платформа</p>
+        <ul>
+          <li><a href="#" class="s8-link">О методе</a></li>
+          <li><a href="#" class="s8-link">Специалисты</a></li>
+          <li><a href="#" class="s8-link">Направления</a></li>
+          <li><a href="#" class="s8-link">Озарины и отдых</a></li>
+          <li><a href="#" class="s8-link">Встречи с Автором</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="s8-coltitle">Помощь</p>
+        <ul>
+          <li><a href="#" class="s8-link">Как купить</a></li>
+          <li><a href="#" class="s8-link">Оплата и возврат</a></li>
+          <li><a href="#" class="s8-link">Договор-оферта</a></li>
+          <li><a href="#" class="s8-link">Общественная приёмная</a></li>
+          <li><a href="#" class="s8-link">Контакты</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="s8-coltitle">Связь</p>
+        <a href="mailto:info@ozarign5da.ru" class="s8-mail">info@ozarign5da.ru</a>
+        <button class="s8-chat" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+          </svg>
+          Написать в чат
+        </button>
+      </div>
+    </div>
+
+    <div class="s8-bottom">
+      <div class="s8-legal">
+        <span>© 2026 Озаригн Глобал. Все права защищены.</span>
+        <div class="s8-legal-links">
+          <a href="#">Пользовательское соглашение</a>
+          <a href="#">Политика конфиденциальности</a>
+          <a href="#">Реквизиты</a>
+        </div>
+      </div>
+      <div class="s8-pay">
+        <svg width="38" height="24" viewBox="0 0 38 24" fill="none">
+          <rect width="38" height="24" rx="4" fill="rgba(255,255,255,0.06)"/>
+          <text x="19" y="16" text-anchor="middle" font-family="Manrope" font-weight="700" font-size="11" letter-spacing="1" fill="#fff">VISA</text>
+        </svg>
+        <svg width="38" height="24" viewBox="0 0 38 24" fill="none">
+          <rect width="38" height="24" rx="4" fill="rgba(255,255,255,0.06)"/>
+          <circle cx="16" cy="12" r="5.5" fill="rgba(255,255,255,0.45)"/>
+          <circle cx="22" cy="12" r="5.5" fill="rgba(255,255,255,0.85)"/>
+          <path d="M19 7.6 a5.5 5.5 0 0 1 0 8.8 a5.5 5.5 0 0 1 0 -8.8z" fill="rgba(255,255,255,0.6)"/>
+        </svg>
+        <svg width="38" height="24" viewBox="0 0 38 24" fill="none">
+          <rect width="38" height="24" rx="4" fill="rgba(255,255,255,0.06)"/>
+          <text x="19" y="16" text-anchor="middle" font-family="Manrope" font-weight="700" font-size="11" letter-spacing="1" fill="#fff">МИР</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ── Reveal on scroll: applies the class named in data-reveal once entered ──
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var cls = e.target.getAttribute("data-reveal");
+      if (cls) e.target.classList.add(cls);
+
+      // Section 2 — start count-up on metrics when revealed
+      if (cls === "s2-animate" && e.target.classList.contains("s2")) {
+        startCountUp(e.target);
+      }
+      // Section 3 — kick off draw + focus rotation when cards revealed
+      if (cls === "s3-cards-visible") {
+        startCardDraw(e.target);
+        startFocusRotation(e.target);
+      }
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: "-100px 0px" });
+
+  document.querySelectorAll("[data-reveal]").forEach(function (el) {
+    io.observe(el);
+  });
+
+  // ── Count-up ──
+  function startCountUp(section) {
+    if (reduced) {
+      section.querySelectorAll("[data-count]").forEach(function (el) {
+        el.textContent = el.getAttribute("data-count");
+      });
+      return;
+    }
+    section.querySelectorAll("[data-count]").forEach(function (el) {
+      var target = parseInt(el.getAttribute("data-count"), 10);
+      var duration = 1600;
+      var start = performance.now();
+      function tick(now) {
+        var t = Math.min((now - start) / duration, 1);
+        var ease = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.floor(ease * target);
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  // ── Section 3: card draw class ──
+  function startCardDraw(mosaic) {
+    setTimeout(function () {
+      mosaic.querySelectorAll(".s3-card").forEach(function (c) {
+        c.classList.add("s3-draw");
+      });
+    }, reduced ? 0 : 250);
+  }
+
+  // ── Section 3: running focus rotation [0,3,1,5,2,4] every 2.4s ──
+  function startFocusRotation(mosaic) {
+    if (reduced) return;
+    var order = [0, 3, 1, 5, 2, 4];
+    var idx = 0;
+    var paused = false;
+    var resumeTimer = null;
+    var intervalId = null;
+
+    var cards = Array.prototype.slice.call(mosaic.querySelectorAll(".s3-card"));
+    function setActive(i) {
+      cards.forEach(function (c) { c.classList.remove("s3-active"); });
+      var target = mosaic.querySelector('[data-card="' + i + '"]');
+      if (target) target.classList.add("s3-active");
+    }
+    function step() {
+      setActive(order[idx % order.length]);
+      idx++;
+    }
+    function start() {
+      step();
+      intervalId = setInterval(step, 2400);
+    }
+    function stop() {
+      clearInterval(intervalId);
+    }
+
+    cards.forEach(function (card) {
+      var i = parseInt(card.getAttribute("data-card"), 10);
+      card.addEventListener("mouseenter", function () {
+        clearTimeout(resumeTimer);
+        stop();
+        paused = true;
+        setActive(i);
+      });
+      card.addEventListener("mouseleave", function () {
+        resumeTimer = setTimeout(function () {
+          if (paused) {
+            paused = false;
+            start();
+          }
+        }, 1000);
+      });
+    });
+
+    start();
+  }
+
+  // ── FAQ accordion ──
+  document.querySelectorAll(".s6-item").forEach(function (item) {
+    var body = item.querySelector(".s6-item-body");
+    var inner = item.querySelector(".s6-item-body-inner");
+    function syncHeight() {
+      if (item.classList.contains("is-open")) {
+        body.style.height = inner.scrollHeight + "px";
+        body.style.opacity = "1";
+      } else {
+        body.style.height = "0px";
+        body.style.opacity = "0";
+      }
+    }
+    syncHeight();
+    item.querySelector(".s6-item-head").addEventListener("click", function () {
+      item.classList.toggle("is-open");
+      syncHeight();
+    });
+    if (window.ResizeObserver) {
+      new ResizeObserver(syncHeight).observe(inner);
+    }
+    window.addEventListener("resize", syncHeight);
+  });
+
+  // ── FinalCTA form ──
+  var form = document.getElementById("ctaForm");
+  var input = document.getElementById("ctaInput");
+  var submit = document.getElementById("ctaSubmit");
+  var submitLabel = document.getElementById("ctaSubmitLabel");
+  var success = document.getElementById("ctaSuccess");
+
+  if (form) {
+    input.addEventListener("focus", function () { form.classList.add("is-focused"); });
+    input.addEventListener("blur",  function () { form.classList.remove("is-focused"); });
+    input.addEventListener("input", function () {
+      submit.disabled = !input.value.trim();
+    });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!input.value.trim() || submit.disabled) return;
+      submit.disabled = true;
+      submitLabel.textContent = "Отправляем…";
+      var icon = document.getElementById("ctaSubmitIcon");
+      if (icon) icon.style.display = "none";
+      setTimeout(function () {
+        form.style.display = "none";
+        success.style.display = "flex";
+      }, 900);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
